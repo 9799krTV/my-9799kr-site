@@ -22,7 +22,7 @@ export default function Home() {
   ];
 
   return (
-    <main className="min-h-screen p-4 md:p-10 bg-[#050505] text-white selection:bg-blue-500/30">
+    <main className="min-h-screen p-4 md:p-10 bg-[#050505] text-white selection:bg-blue-500/30 overflow-x-hidden">
       
       {/* iOS Glass Backgrounds */}
       <div className="fixed inset-0 pointer-events-none -z-10">
@@ -46,9 +46,9 @@ export default function Home() {
            <StreamPlayer />
         </section>
 
-        {/* Support Button (Smaller & Cleaner) */}
+        {/* Support Button */}
         <div className="flex justify-center">
-          <a href="https://ko-fi.com/9799kr" target="_blank" className="px-8 py-3 bg-white text-black font-bold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2 text-sm">
+          <a href="https://ko-fi.com/9799kr" target="_blank" className="px-8 py-3 bg-white text-black font-bold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2 text-sm shadow-xl">
             <Coffee size={18} />
             SUPPORT THE MISSION
           </a>
@@ -67,7 +67,7 @@ export default function Home() {
               ].map((link) => (
                 <a key={link.label} href={link.url} target="_blank" className="flex items-center justify-between p-4 rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-all group">
                   <div className="flex items-center gap-3">
-                    <Link size={16} className="text-zinc-500" />
+                    <Link size={16} className="text-zinc-500 group-hover:text-white transition-colors" />
                     <span className="text-sm font-semibold text-zinc-300 group-hover:text-white">{link.label}</span>
                   </div>
                   <ChevronRight size={14} className="text-zinc-600 group-hover:text-white group-hover:translate-x-1 transition-all" />
