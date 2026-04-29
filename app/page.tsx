@@ -2,7 +2,7 @@ import StreamPlayer from './components/StreamPlayer';
 import { 
   X, 
   Video, 
-  Youtube, 
+  Play, 
   Share2, 
   Globe, 
   Link, 
@@ -15,7 +15,7 @@ export default function Home() {
   const socials = [
     { name: "X", url: "https://x.com/9799kr", Icon: X },
     { name: "TikTok", url: "https://www.tiktok.com/@9799krtv", Icon: Video },
-    { name: "YouTube", url: "https://www.youtube.com/channel/UC_LPu1x_SwG-EKG4iytGgzA", Icon: Youtube },
+    { name: "YouTube", url: "https://www.youtube.com/channel/UC_LPu1x_SwG-EKG4iytGgzA", Icon: Play },
     { name: "Bilibili (Global)", url: "https://www.bilibili.tv/en/space/1589181519", Icon: Share2 },
     { name: "Bilibili (CN)", url: "https://space.bilibili.com/3546631593003540", Icon: Share2 },
     { name: "OK.ru", url: "https://ok.ru/profile/584846564494", Icon: Globe },
@@ -23,8 +23,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen p-4 md:p-10 bg-[#050505] text-white selection:bg-blue-500/30 overflow-x-hidden">
-      
-      {/* iOS Glass Backgrounds */}
       <div className="fixed inset-0 pointer-events-none -z-10">
         <div className="absolute top-[-10%] left-[-5%] w-[50%] h-[50%] bg-blue-600/10 blur-[120px] rounded-full animate-pulse"></div>
         <div className="absolute bottom-[-10%] right-[-5%] w-[40%] h-[40%] bg-purple-600/10 blur-[120px] rounded-full"></div>
@@ -40,13 +38,10 @@ export default function Home() {
       </header>
 
       <div className="max-w-4xl mx-auto space-y-8">
-        
-        {/* Stream Card */}
         <section className="bg-white/[0.03] backdrop-blur-3xl border border-white/10 p-3 md:p-5 rounded-[2rem] shadow-2xl">
            <StreamPlayer />
         </section>
 
-        {/* Support Button */}
         <div className="flex justify-center">
           <a href="https://ko-fi.com/9799kr" target="_blank" className="px-8 py-3 bg-white text-black font-bold rounded-xl transition-all hover:scale-105 active:scale-95 flex items-center gap-2 text-sm shadow-xl">
             <Coffee size={18} />
@@ -55,7 +50,6 @@ export default function Home() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-6">
-          {/* Archives */}
           <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/10 p-6 rounded-[2rem]">
             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6 flex items-center gap-2">
               <Archive size={14} /> Archives
@@ -76,7 +70,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Connectivity */}
           <div className="bg-white/[0.02] backdrop-blur-3xl border border-white/10 p-6 rounded-[2rem]">
             <h2 className="text-[10px] font-black uppercase tracking-[0.4em] text-blue-400 mb-6 italic">Connectivity</h2>
             <div className="grid grid-cols-2 gap-3">
