@@ -4,13 +4,17 @@ import ReactPlayer from 'react-player';
 import { VideoJSPlayer } from './VideoJSPlayer';
 
 export default function StreamPlayer() {
+  // We set Server 1 as the default starting point
   const [activeServer, setActiveServer] = useState('Server 1');
 
   const servers = {
-    // This is a professional HLS test link
+    // NEW: Video.js Player (Professional Source)
     "Server 1": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", 
+    
+    // YOUR ORIGINAL SERVERS:
     "Server 2": "https://kick.com/9799krtvhd",
-    "Server 3": "https://odysee.com/@9799kr:5"
+    "Server 3": "https://odysee.com/@9799kr:5",
+    "Server 4": "https://www.youtube.com/embed/live_stream?channel=UC_LPu1x_SwG-EKG4iytGgzA" 
   };
 
   const videoJsOptions = {
@@ -20,21 +24,22 @@ export default function StreamPlayer() {
     fluid: true,
     sources: [{
       src: servers["Server 1"],
-      type: 'application/x-mpegURL' // This type is required for .m3u8 links
+      type: 'application/x-mpegURL' // Handles the .m3u8 professional format
     }]
   };
 
   return (
     <div className="space-y-4">
+      {/* Server Selection Buttons */}
       <div className="flex flex-wrap gap-2 mb-4">
         {Object.keys(servers).map((name) => (
           <button
             key={name}
             onClick={() => setActiveServer(name)}
-            className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all ${
+            className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${
               activeServer === name 
-                ? "bg-blue-600 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]" 
-                : "bg-white/5 text-zinc-500 hover:text-white border border-white/5"
+                ? "bg-blue-600 border-blue-400 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]" 
+                : "bg-white/5 border-white/10 text-zinc-500 hover:text-white"
             }`}
           >
             {name}
@@ -42,10 +47,13 @@ export default function StreamPlayer() {
         ))}
       </div>
 
+      {/* The Dynamic Player Window */}
       <div className="aspect-video w-full bg-black rounded-xl overflow-hidden border border-white/5 shadow-2xl">
         {activeServer === "Server 1" ? (
+          // Video.js for the Main Server
           <VideoJSPlayer options={videoJsOptions} />
         ) : (
+          // ReactPlayer for all backup servers (2, 3, and 4)
           <ReactPlayer 
             url={servers[activeServer as keyof typeof servers]}
             width="100%"
@@ -54,6 +62,14 @@ export default function StreamPlayer() {
             playing
           />
         )}
+      </div>
+
+      {/* Status Indicator */}
+      <div className="flex items-center gap-2 px-1">
+        <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
+        <p className="text-zinc-500 text-[9px] uppercase tracking-[0.2em]">
+          Current Signal: <span className="text-blue-400 font-bold">{activeServer}</span>
+        </p>
       </div>
     </div>
   );
