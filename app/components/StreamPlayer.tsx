@@ -13,8 +13,8 @@ export default function StreamPlayer() {
     
     // YOUR ORIGINAL SERVERS:
     "Server 2": "https://kick.com/9799krtvhd",
-    "Server 3": "https://odysee.com/@9799kr:5",
-    "Server 4": "https://www.youtube.com/embed/live_stream?channel=UC_LPu1x_SwG-EKG4iytGgzA" 
+    "Server 3": "https://odysee.com/@9799kr:5/Live-with-9799krTV:c?r=5qzuoJYu9zWdbHcit3NfdYLQzQi3my4t",
+    "Server 4": "https://www.twitch.tv/9799krTVHD" 
   };
 
   const videoJsOptions = {
