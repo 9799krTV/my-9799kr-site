@@ -12,9 +12,9 @@ export default function StreamPlayer() {
     "Server 1": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", 
     
     // YOUR ORIGINAL SERVERS:
-    "Server 2": "https://kick.com/9799krtvhd",
+    "Server 2": "https://kick.com/9799krtvlive",
     "Server 3": "https://odysee.com/@9799kr:5/Live-with-9799krTV:c?r=5qzuoJYu9zWdbHcit3NfdYLQzQi3my4t",
-    "Server 4": "https://www.twitch.tv/9799krTVHD" 
+    "Server 4": "https://www.twitch.tv/9799krTVLIVE" 
   };
 
   const videoJsOptions = {
