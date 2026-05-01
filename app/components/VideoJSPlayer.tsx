@@ -8,21 +8,19 @@ export const VideoJSPlayer = ({ options }: { options: any }) => {
   const playerRef = useRef<any>(null);
 
   useEffect(() => {
-    if (!playerRef.current) {
+    // Check if we are in the browser
+    if (typeof window !== 'undefined' && !playerRef.current) {
       const videoElement = document.createElement("video-js");
-      // Use 'vjs-big-play-centered' to put the play button in the middle
-      videoElement.classList.add('vjs-big-play-centered', 'vjs-fluid');
+      videoElement.classList.add('vjs-big-play-centered');
       videoRef.current?.appendChild(videoElement);
 
-      const player = playerRef.current = videojs(videoElement, options);
-    } else {
-      const player = playerRef.current;
-      player.autoplay(options.autoplay);
-      player.src(options.sources);
+      const player = playerRef.current = videojs(videoElement, options, () => {
+        console.log('Player Ready');
+      });
     }
-  }, [options, videoRef]);
+  }, [options]);
 
-  // Cleanup on close
+  // Clean up to prevent memory leaks and build errors
   useEffect(() => {
     const player = playerRef.current;
     return () => {
@@ -34,7 +32,7 @@ export const VideoJSPlayer = ({ options }: { options: any }) => {
   }, [playerRef]);
 
   return (
-    <div data-vjs-player className="rounded-xl overflow-hidden">
+    <div data-vjs-player className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
       <div ref={videoRef} />
     </div>
   );
