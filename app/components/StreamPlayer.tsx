@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import Hls from 'hls.js'; // This helps play the .m3u8 link
+import Hls from 'hls.js';
 
 export default function StreamPlayer() {
   const [hasWindow, setHasWindow] = useState(false);
@@ -10,7 +10,6 @@ export default function StreamPlayer() {
   useEffect(() => {
     setHasWindow(true);
     
-    // Logic to play the .m3u8 Odysee link on Server 1
     if (activeServer === 'Server 1') {
       const video = document.getElementById('odysee-player') as HTMLVideoElement;
       const videoUrl = "https://cloud.odysee.live/content/57132c5cf814dee8334362de50b72a48b0e603d5/master.m3u8";
@@ -71,10 +70,11 @@ export default function StreamPlayer() {
         )}
       </div>
 
+      {/* This is the part you circled - Now it shows the Server Name */}
       <div className="flex items-center gap-2 px-1">
         <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
         <p className="text-zinc-500 text-[9px] uppercase tracking-[0.2em]">
-          Mode: <span className="text-blue-400 font-bold">{activeServer === "Server 1" ? "Direct Odysee HLS" : "Platform Embed"}</span>
+          MODE: <span className="text-blue-400 font-bold">{activeServer}</span>
         </p>
       </div>
     </div>
