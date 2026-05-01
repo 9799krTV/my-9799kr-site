@@ -3,10 +3,8 @@ import { useState } from 'react';
 import ReactPlayer from 'react-player';
 
 export default function StreamPlayer() {
-  // Reset back to Server 1 as the default
   const [activeServer, setActiveServer] = useState('Server 1');
 
-  // The original three servers you had working perfectly
   const servers = {
     "Server 1": "https://odysee.com/@9799kr:5/Live-with-9799krTV:c?r=5qzuoJYu9zWdbHcit3NfdYLQzQi3my4t",
     "Server 2": "https://kick.com/9799krtvlive",
@@ -40,6 +38,11 @@ export default function StreamPlayer() {
           height="100%"
           controls
           playing
+          config={{
+            twitch: {
+              options: { theme: 'dark' }
+            }
+          }}
         />
       </div>
 
