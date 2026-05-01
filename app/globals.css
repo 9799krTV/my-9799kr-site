@@ -1,5 +1,5 @@
 /* --- Video.js Modern Theme --- */
-.video-js.vjs-big-play-centered .vjs-big-play-button {
+.vjs-big-play-centered .vjs-big-play-button {
   background-color: rgba(255, 255, 255, 0.1) !important;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
@@ -11,7 +11,7 @@
   margin-left: -30px !important;
 }
 
-.video-js .vjs-control-bar {
+ .vjs-control-bar {
   background: linear-gradient(transparent, rgba(0,0,0,0.9)) !important;
   height: 50px !important;
   border-bottom-left-radius: 1rem;
