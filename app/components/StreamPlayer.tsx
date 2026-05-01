@@ -18,15 +18,16 @@ export default function StreamPlayer() {
   };
 
   const videoJsOptions = {
-    autoplay: true,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    sources: [{
-      src: servers["Server 1"],
-      type: 'application/x-mpegURL' // Handles the .m3u8 professional format
-    }]
-  };
+  autoplay: true,
+  controls: true,
+  responsive: true,
+  fluid: true,
+  liveui: true, // This enables the live-specific UI features
+  sources: [{
+    src: servers["Server 1"],
+    type: 'application/x-mpegURL'
+  }]
+};
 
   return (
     <div className="space-y-4">
