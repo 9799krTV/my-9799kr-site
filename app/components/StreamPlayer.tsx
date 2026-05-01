@@ -12,7 +12,7 @@ export default function StreamPlayer() {
     
     if (activeServer === 'Server 1') {
       const video = document.getElementById('odysee-player') as HTMLVideoElement;
-      const videoUrl = "https://cloud.odysee.live/content/57132c5cf814dee8334362de50b72a48b0e603d5/master.m3u8";
+      const videoUrl = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8](https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
 
       if (video && Hls.isSupported()) {
         const hls = new Hls();
