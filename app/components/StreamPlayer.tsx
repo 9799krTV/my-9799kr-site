@@ -1,14 +1,31 @@
 "use client";
 import { useState } from 'react';
 import ReactPlayer from 'react-player';
+import { VideoJSPlayer } from './VideoJSPlayer';
 
 export default function StreamPlayer() {
+  // We set Server 1 as the default starting point
   const [activeServer, setActiveServer] = useState('Server 1');
 
   const servers = {
-    "Server 1": "https://odysee.com/@9799kr:5/Live-with-9799krTV:c?r=5qzuoJYu9zWdbHcit3NfdYLQzQi3my4t",
+    // NEW: Video.js Player (Professional Source)
+    "Server 1": "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8", 
+    
+    // YOUR ORIGINAL SERVERS:
     "Server 2": "https://kick.com/9799krtvlive",
-    "Server 3": "https://www.twitch.tv/9799krTVLIVE"
+    "Server 3": "https://odysee.com/@9799kr:5/Live-with-9799krTV:c?r=5qzuoJYu9zWdbHcit3NfdYLQzQi3my4t",
+    "Server 4": "https://www.twitch.tv/9799krTVLIVE" 
+  };
+
+  const videoJsOptions = {
+    autoplay: true,
+    controls: true,
+    responsive: true,
+    fluid: true,
+    sources: [{
+      src: servers["Server 1"],
+      type: 'application/x-mpegURL' // Handles the .m3u8 professional format
+    }]
   };
 
   return (
@@ -21,7 +38,7 @@ export default function StreamPlayer() {
             onClick={() => setActiveServer(name)}
             className={`px-4 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all border ${
               activeServer === name 
-                ? "bg-blue-600 border-blue-400 text-white shadow-[0_0_15px_rgba(37,99,235,0.4)]" 
+                ? "bg-blue-600 border-blue-400 text-white shadow-[0_0_20px_rgba(37,99,235,0.4)]" 
                 : "bg-white/5 border-white/10 text-zinc-500 hover:text-white"
             }`}
           >
@@ -30,27 +47,28 @@ export default function StreamPlayer() {
         ))}
       </div>
 
-      {/* The Player Window */}
+      {/* The Dynamic Player Window */}
       <div className="aspect-video w-full bg-black rounded-xl overflow-hidden border border-white/5 shadow-2xl">
-        <ReactPlayer 
-          url={servers[activeServer as keyof typeof servers]}
-          width="100%"
-          height="100%"
-          controls
-          playing
-          config={{
-            twitch: {
-              options: { theme: 'dark' }
-            }
-          }}
-        />
+        {activeServer === "Server 1" ? (
+          // Video.js for the Main Server
+          <VideoJSPlayer options={videoJsOptions} />
+        ) : (
+          // ReactPlayer for all backup servers (2, 3, and 4)
+          <ReactPlayer 
+            url={servers[activeServer as keyof typeof servers]}
+            width="100%"
+            height="100%"
+            controls
+            playing
+          />
+        )}
       </div>
 
       {/* Status Indicator */}
       <div className="flex items-center gap-2 px-1">
         <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
         <p className="text-zinc-500 text-[9px] uppercase tracking-[0.2em]">
-          Signal: <span className="text-blue-400 font-bold">{activeServer}</span>
+          Current Signal: <span className="text-blue-400 font-bold">{activeServer}</span>
         </p>
       </div>
     </div>
