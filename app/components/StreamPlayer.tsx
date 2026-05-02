@@ -1,28 +1,34 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import Hls from 'hls.js';
 
 export default function StreamPlayer() {
   const [hasWindow, setHasWindow] = useState(false);
   const [activeServer, setActiveServer] = useState('Server 1');
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setHasWindow(true);
-    
-    if (activeServer === 'Server 1') {
-      const video = document.getElementById('odysee-player') as HTMLVideoElement;
-      const videoUrl = "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8](https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8";
+  }, []);
 
-      if (video && Hls.isSupported()) {
+  useEffect(() => {
+    if (activeServer === 'Server 1' && videoRef.current) {
+      const videoUrl = "https://cloud.odysee.live/content/57132c5cf814dee8334362de50b72a48b0e603d5/master.m3u8";
+      
+      if (Hls.isSupported()) {
         const hls = new Hls();
         hls.loadSource(videoUrl);
-        hls.attachMedia(video);
-      } else if (video && video.canPlayType('application/vnd.apple.mpegurl')) {
-        video.src = videoUrl;
+        hls.attachMedia(videoRef.current);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          videoRef.current?.play().catch(() => console.log("Autoplay blocked; user must click play."));
+        });
+        return () => hls.destroy(); // Cleanup
+      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
+        videoRef.current.src = videoUrl;
       }
     }
-  }, [activeServer]);
+  }, [activeServer, hasWindow]);
 
   const servers = {
     "Server 1": "Odysee Direct",
@@ -50,14 +56,14 @@ export default function StreamPlayer() {
         ))}
       </div>
 
-      <div className="aspect-video w-full bg-black rounded-xl overflow-hidden border border-white/5 shadow-2xl">
+      <div className="aspect-video w-full bg-black rounded-xl overflow-hidden border border-white/5 shadow-2xl relative">
         {activeServer === "Server 1" ? (
           <video 
-            id="odysee-player" 
+            ref={videoRef}
             controls 
-            autoPlay 
+            playsInline
             muted 
-            className="w-full h-full"
+            className="w-full h-full object-contain bg-black"
           />
         ) : (
           <ReactPlayer 
@@ -70,7 +76,6 @@ export default function StreamPlayer() {
         )}
       </div>
 
-      {/* This is the part you circled - Now it shows the Server Name */}
       <div className="flex items-center gap-2 px-1">
         <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
         <p className="text-zinc-500 text-[9px] uppercase tracking-[0.2em]">
