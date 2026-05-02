@@ -1,37 +1,17 @@
 "use client";
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import ReactPlayer from 'react-player';
-import Hls from 'hls.js';
 
 export default function StreamPlayer() {
   const [hasWindow, setHasWindow] = useState(false);
   const [activeServer, setActiveServer] = useState('Server 1');
-  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     setHasWindow(true);
   }, []);
 
-  useEffect(() => {
-    if (activeServer === 'Server 1' && videoRef.current) {
-      const videoUrl = "https://cloud.odysee.live/content/57132c5cf814dee8334362de50b72a48b0e603d5/master.m3u8";
-      
-      if (Hls.isSupported()) {
-        const hls = new Hls();
-        hls.loadSource(videoUrl);
-        hls.attachMedia(videoRef.current);
-        hls.on(Hls.Events.MANIFEST_PARSED, () => {
-          videoRef.current?.play().catch(() => console.log("Autoplay blocked; user must click play."));
-        });
-        return () => hls.destroy(); // Cleanup
-      } else if (videoRef.current.canPlayType('application/vnd.apple.mpegurl')) {
-        videoRef.current.src = videoUrl;
-      }
-    }
-  }, [activeServer, hasWindow]);
-
   const servers = {
-    "Server 1": "Odysee Direct",
+    "Server 1": "https://odysee.com/@9799kr:5/Live-with-9799krTV:c",
     "Server 2": "https://kick.com/9799krtvlive",
     "Server 3": "https://www.twitch.tv/9799krTVLIVE"
   };
@@ -40,6 +20,7 @@ export default function StreamPlayer() {
 
   return (
     <div className="space-y-4">
+      {/* Server Selection Buttons */}
       <div className="flex flex-wrap gap-2 mb-4">
         {Object.keys(servers).map((name) => (
           <button
@@ -56,26 +37,19 @@ export default function StreamPlayer() {
         ))}
       </div>
 
+      {/* Main Video Player Area */}
       <div className="aspect-video w-full bg-black rounded-xl overflow-hidden border border-white/5 shadow-2xl relative">
-        {activeServer === "Server 1" ? (
-          <video 
-            ref={videoRef}
-            controls 
-            playsInline
-            muted 
-            className="w-full h-full object-contain bg-black"
-          />
-        ) : (
-          <ReactPlayer 
-            url={servers[activeServer as keyof typeof servers]}
-            width="100%"
-            height="100%"
-            controls
-            playing
-          />
-        )}
+        <ReactPlayer 
+          url={servers[activeServer as keyof typeof servers]}
+          width="100%"
+          height="100%"
+          controls
+          playing
+          muted
+        />
       </div>
 
+      {/* Footer Info Display */}
       <div className="flex items-center gap-2 px-1">
         <div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse"></div>
         <p className="text-zinc-500 text-[9px] uppercase tracking-[0.2em]">
